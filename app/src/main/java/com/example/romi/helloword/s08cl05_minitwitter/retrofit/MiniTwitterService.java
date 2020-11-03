@@ -6,6 +6,7 @@ import com.example.romi.helloword.s08cl05_minitwitter.retrofit.response.Response
 
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.GET;
 import retrofit2.http.POST;
 
 public interface MiniTwitterService {
@@ -14,5 +15,7 @@ public interface MiniTwitterService {
 
     @POST("auth/signup")
     Call<ResponseAuth> doSignUp(@Body RequestSignUp requestSignUp);
+
+
 
 }

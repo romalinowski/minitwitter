@@ -1,33 +1,58 @@
 package com.example.romi.helloword.s08cl05_minitwitter.ui;
 
 import android.os.Bundle;
-import android.widget.Toast;
+import android.view.MenuItem;
 
 import com.example.romi.helloword.s08cl05_minitwitter.R;
-import com.example.romi.helloword.s08cl05_minitwitter.common.Constantes;
-import com.example.romi.helloword.s08cl05_minitwitter.common.SharedPreferencesManager;
+import com.example.romi.helloword.s08cl05_minitwitter.TweetListFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.bottomnavigation.BottomNavigationView.OnNavigationItemSelectedListener;
+import com.google.android.material.navigation.NavigationView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-import androidx.navigation.ui.AppBarConfiguration;
-import androidx.navigation.ui.NavigationUI;
 
 
 
 public class DashboardActivity extends AppCompatActivity {
 
+    BottomNavigationView bottomNavigationView;
+    NavigationView navigationView;
+
+    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener = new BottomNavigationView.OnNavigationItemSelectedListener() {
+        @Override
+        public boolean onNavigationItemSelected(@NonNull final MenuItem item) {
+            switch (item.getItemId()) {
+                case R.id.navigation_home:
+                    return true;
+                case R.id.navigation_tweets_like:
+                    return true;
+                case R.id.navigation_profile:
+                    return true;
+            }
+            return false;
+        }
+    };
+
+
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
-        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation_home);
 
-     //   navigation.setOnNavigationItemSelectedListener();
         getSupportActionBar().hide();
 
+//        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation_home);
+    
+    //    navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
+        getSupportFragmentManager()
+                .beginTransaction()
+                .add(R.id.fragmentContainer, new TweetListFragment())
+                .commit();
 
 
         //08_15-1-g)
