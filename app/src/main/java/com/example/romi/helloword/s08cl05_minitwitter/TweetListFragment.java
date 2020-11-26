@@ -4,6 +4,9 @@ import android.content.Context;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -16,6 +19,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.example.romi.helloword.s08cl05_minitwitter.data.TweetViewModel;
 import com.example.romi.helloword.s08cl05_minitwitter.dummy.DummyContent;
 import com.example.romi.helloword.s08cl05_minitwitter.dummy.DummyContent.DummyItem;
 import com.example.romi.helloword.s08cl05_minitwitter.retrofit.AuthTwitterClient;
@@ -34,9 +38,9 @@ public class TweetListFragment extends Fragment {
     RecyclerView recyclerView;
     MyTweetRecyclerViewAdapter adapter;
     List<Tweets> tweetsList;
+    TweetViewModel tweetViewModel;
 
-    AuthTwitterService authTwitterService;
-    AuthTwitterClient  authTwitterClient;
+
 
 
     /**
@@ -60,6 +64,10 @@ public class TweetListFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+
+        tweetViewModel = ViewModelProviders.of(getActivity())
+                .get(TweetViewModel.class);
+
         if (getArguments() != null) {
             mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
         }
@@ -80,43 +88,30 @@ public class TweetListFragment extends Fragment {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
 
-            retrofitInit();
+            adapter = new MyTweetRecyclerViewAdapter(
+                    getActivity(),
+                    tweetsList
+            );
+            recyclerView.setAdapter(adapter);
+
             loadTweetData();
 
         }
         return view;
     }
 
-    private void retrofitInit() {
-        authTwitterClient = AuthTwitterClient.getInstance();
-        authTwitterService = authTwitterClient.getAuthTwitterService();
-    }
+
 
     private void loadTweetData() {
 
-        Call<List<Tweets>> call = authTwitterService.getAllTweets();
-        call.enqueue(new Callback<List<Tweets>>() {
+        tweetViewModel.getTweets().observe(getActivity(), new Observer<List<Tweets>>() {
             @Override
-            public void onResponse(Call<List<Tweets>> call, Response<List<Tweets>> response) {
-                if(response.isSuccessful()){
-                    tweetsList  = response.body();
-                    adapter = new MyTweetRecyclerViewAdapter(
-                            getActivity(),
-                            tweetsList
-                    );
-                    recyclerView.setAdapter(adapter);
-
-                }else{
-                    Toast.makeText(getActivity(),"Error al Listar los Tweets",Toast.LENGTH_LONG).show();
-                }
-
-            }
-
-            @Override
-            public void onFailure(Call<List<Tweets>> call, Throwable throwable) {
-                Toast.makeText(getActivity(),"Error en la conexión.",Toast.LENGTH_LONG).show();
+            public void onChanged(List<Tweets> tweets) {
+                tweetsList = tweets;
+                adapter.setData(tweetsList);
             }
         });
+
 
 
     }
