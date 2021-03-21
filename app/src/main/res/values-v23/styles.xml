@@ -8,4 +8,26 @@
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:windowLightStatusBar">true</item>
     </style>
+
+        <!-- Estilos de pantalla completa.-->
+
+    <!-- S08 - CL23-->
+    <style name="FullScreenDialogStyle" parent="Theme.AppCompat.Dialog" >
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+
+        <!-- Estilos pantalla completa-->
+        <item name= "windowNoTitle" >true</item>
+        <!-- No es fullscreen ya que se tiene que ver barra de notif y bat-->
+        <item name= "android:windowFullscreen">false</item>
+        <!-- No es cuadro de dialogo flotante(Ocupa all largo y ancho de la pantalla)-->
+        <item name="android:windowIsFloating" >false</item>
+        <item name="android:windowBackground">@android:color/white</item>
+        <!-- FIN S08 - CL23-->
+    </style>
+
+
+
+   
 </resources>
