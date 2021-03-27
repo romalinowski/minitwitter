@@ -46,7 +46,7 @@ public class MyTweetRecyclerViewAdapter extends RecyclerView.Adapter<MyTweetRecy
 
             holder.mItem = mValues.get(position);
 
-            holder.tvUserName.setText(holder.mItem.getUser().getUsername());
+            holder.tvUserName.setText("@" + holder.mItem.getUser().getUsername());
             holder.tvLikesCount.setText(String.valueOf(holder.mItem.getLikes().size()));
             holder.tvMessage.setText(holder.mItem.getMensaje());
 
@@ -56,7 +56,12 @@ public class MyTweetRecyclerViewAdapter extends RecyclerView.Adapter<MyTweetRecy
                 Glide.with(ctx)
                         .load("https//www.minitwitter.com/apiv1/uploads/photos/" + photo)
                         .into(holder.ivAvatar);
-
+                //RESETEA EL ESTILO SI SCROLEAN MUY RAPIDO
+                Glide.with(ctx)
+                        .load(R.drawable.ic_like)
+                        .into(holder.ivLike);
+                holder.tvLikesCount.setTextColor(ctx.getResources().getColor(android.R.color.black));
+                holder.tvLikesCount.setTypeface(null, Typeface.NORMAL);
 
                 for (Like like : holder.mItem.getLikes()) {
                     if (like.getUsername().equals(username)) {

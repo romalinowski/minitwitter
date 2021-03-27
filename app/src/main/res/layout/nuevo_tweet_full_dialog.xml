@@ -54,6 +54,7 @@
         android:gravity="start|top"
         android:hint="Que esta pasando?"
         android:inputType="textMultiLine"
+        android:textColor="@android:color/widget_edittext_dark"
         android:textColorHint="@color/colorPrimary"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

@@ -7,6 +7,8 @@ import com.google.gson.annotations.SerializedName;
 
 public class Tweets {
 
+
+
     @SerializedName("id")
     @Expose
     private Integer id;
@@ -50,6 +52,13 @@ public class Tweets {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public Tweets(Tweets nuevoTweet){
+        this.id = nuevoTweet.getId();
+        this.mensaje = nuevoTweet.getMensaje();
+        this.likes = nuevoTweet.getLikes();
+        this.user = nuevoTweet.getUser();
     }
 
 }
